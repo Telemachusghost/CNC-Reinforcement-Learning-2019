@@ -1,0 +1,25 @@
+Hw 1
+Derick Falk
+
+1.1 
+
+Yes, the algorithm would learn differently, because when the algorithm makes a choice it would make the reward go down for that 
+in the other algorithm which would make the other change vis versa. This would lead to a more dynamic algorithm.
+
+1.2
+
+I guess you could set those states as having the same reward, but I feel like this may make the algorithm kinda predictable.
+If the opponent does not take advantage of symmetries then I would think you shouldnt have the algorithm treat them differently.
+
+
+1.3 The algorithm would never explore and learn different ways of playing this might work for a very static boring player but 
+when used against anything interesting it would not perform well. Not that it would perform well in even the static case very well.
+It doesnt really allow for much learning to take place.
+
+1.4 When we do not learn from exploratory moves the probablities learned would converge to the rewards for the greedy actions
+    When we do learn from exploratory movies the probablities would converge for all of the actions especially if we use the
+    averaging sample method etc. used in ch 2
+
+1.5 It might be better to weight the more recent actions better than older ones. If playing against another algorithm you could weigh
+    later changes higher because the algorithm has had more time to learn from you. I do think training against an algorithm
+    would be good because it could resemble a real player. 
