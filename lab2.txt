@@ -1,0 +1,32 @@
+Lab 2
+Derick Falk
+
+1. Upload a description of the structure of your program the 10-armed bandit testbed.
+
+I just created a class for a bandit which can be initialized with a 
+few different values (Left over from Richard's skeleton code) 
+I only use the true reward parameter.
+
+I thought this would be a little easier because it seperates concerns a
+little by having each bandit be responsible for its estimated reward and
+its reward etc.
+
+I then made a SimulateKBandits function that takes in k bandits and 
+does the algorithm as detailed in the text. 
+
+This makes the function responsible for the algorithm and the 
+bandits responsible for the data attached to them. 
+
+2. upload you description of the similarities and differences between sample average and expected value
+
+sample average and expected value both work with random variables
+
+sample average works with an already existing sample and then takes
+its arithmetic mean
+
+expected value is the average value of the same experiment in other 
+words it takes into account the probablity of a value appearing and
+then averages these values.
+
+So I guess the biggest difference is that sample average works with
+a group of existing values and expected value deals with experiments

@@ -1,0 +1,164 @@
+Homework 2
+Derick Falk
+
+Ex. 2.1, 2.2, 2.3, 2.6, 2.7, 2.8, 2.10, 3.3
+
+2.1: In e-greedy action selection, for the case of two actions
+and e = 0.5, what is the probability that the greedy action is selected?
+
+As detailed in the algorithm on page 32 the greedy action is selected
+with a probablity of 1-e or in this case 1-0.5=0.5. So there is a 50%
+chance the greedy action would be selected.
+
+2.2: At which time steps was the e-greedy method used?
+     A1=1,R1=1, A2=2,R2=1, A3=2,R3=2 A4=2,R4=2 A5=3,R5=0
+
+It definetly occured at timestep 2 and 5
+
+It could have occured at timestep 3 but the algorithm could have
+broken the tie randomly in the normal case.
+
+2.3: In the comparison shown in Figure 2.2, which method will perform 
+best in the long run in terms of cumulative reward and probability of 
+selecting the best action? How much better will it be? Express your 
+answer quantitatively.
+
+In the long run e=0.01 will perform better because it will select the 
+optimal action more often because it explores less. It does not 
+arrive at the optimal solution as quicly as e=0.1 because it explores 
+less at first but over time it will converge to the right reward and 
+pick the optimal answer from then on.
+
+I would say it would be picking the optimal answer closer to 90% of the 
+time. This could lead to its average reward being closer to 2-2.3
+
+2.6: Mysterious Spikes The results shown in Figure 2.3 should be quite 
+reliable because they are averages over 2000 individual, randomly 
+chosen 10-armed bandit tasks. Why, then are those oscillations and 
+spikes in the early part of the curve for the optimistic method? In 
+other words, what might makes this method perform particularly better 
+or worse, on average, on particular early steps?
+
+Because the algorithm is choosing actions somewhat indiscriminately 
+in the beginning because everything has values that are quite high. 
+
+With real rewards of mean 0 and variance 1, even after choosing a 
+very bad action it is still chosen later because of how high the e
+stimate is. An action could of had reward -1 and it is still going to 
+be chosen again maybe even a few times before it is not chosen again.
+
+2.7: Unbiased Constant-Step-Size Trick In most of this chapter we have used sample averages to estimate action values because sample averages do not produce the initial bias that constant step sizes do. However, sample averages are not a completely satisfactory solution because they may perform poorly on nonstationary problems. Is it possible to avoid the bias of constant step sizes while retaining their advantages on nonstationary problems? One way is to use a step size of B_n = a/o_n
+
+to process the nth reward for a particular action, where a > 0 is a conventional constant step size, and o_n is a trace of one that starts at 0:
+
+o_n = o_(n-1) + a(1 - o_(n-1)), for n >= 0, with o_0 = 0
+
+Carry out an analysis like that in 2.6 to show that Q_n is an exponential recency-weighted average without initial bias.
+
+Ok so we can see that when n = 1 with o_0 = 0
+o_1 = 0 + a(1-0) = a 
+
+So o_1 = a 
+
+We see in 2.6 that they derive this Q_n+1 = (1-a)^n * Q_1 + E a(1-a)^(n-i) R_i
+
+replacing a with B_n leads us to this
+
+Q_n+1 = (1 - a/o_n)^n * Q_1 + E a/o_n * (1-a/o_n)^(n-1) * R_i
+
+so with o_n = a this means that (1-B_n) = 0 which makes Q_2 not 
+dependent on Q_1 thus making this an exponential recenty-weighted 
+average without initial bias.
+
+2.8: UCB Spikes In figure 2.4 the UCB algorithm shows a distinct spike 
+in performance on the 11th step. Why is this? Note that for your answer 
+to be fully satisfactory it must explain both why the reward increases 
+on the 11th step and why it decreases on subsequent steps. Hint: if c=1 
+then the spike is less prominent.
+
+Before the 11th step all actions are considered maximizing actions 
+because their n_t(a) equal 0 so actions are not really being chosen for
+their estimated value being high. 
+
+On the 11th step an action is actually chosen based on its estimated 
+value with the uncertainy in this estimated value being quite high 
+because of c=2. This spike subsides in subsequent steps because the 
+certainty increases for this action and other actions are selected that
+may not be as optimal especially because c=2 which makes the increase in
+this action's certainty make it not be picked again right away.
+
+
+2.10: Suppose you face a 2-armed bandit task whose true action values 
+change randomly from time step to time step. Specifically, suppose 
+that, for any time step, the true values of actions 1 and 2 are 
+respectively 0.1 and 0.2 which probability 0.5 (Case A), and 0.9 and 
+0.8with probability 0.5 (Case B). If you are not able to tell which 
+case you face at any step, what is the best expectation of success you 
+can achieve and how should you behave to achieve it? Now suppose that 
+on each step you are told whether you are facing case A or case B (
+Although you still dont know the true action values). This is an 
+associative search task. What is the best expectation of success you 
+achieve in this task, and how should you behave to achieve it?
+
+The max reward you can achieve is if in Case a you pick lever 2 100% of
+the time, and in case B you pick lever 1 100% of the time. 
+
+Both of these cases have a 50% chance of appearing, so I think a 
+workable policy would be to just pull lever 2 50% of the time, and 
+pull lever 1 50% of the time. 
+
+If you know what state you are in, I believe the problem would be 
+easier because then you could just use a method like UCB to have a 
+confidence level for the actions but in this case associate these 
+action values with a state. This would make it that you would try both 
+levers in each state and eventually the right levers in each state 
+would be picked more often because of UCB converging.
+
+
+3.3: Consider the problem of driving. You could define the actions in 
+terms of the accelerator, steering wheel, and brake, that is, where 
+your body meets the machine. Or you could define them farther out-say, 
+where the rubber meets the road, considering your actions to be tire 
+torques. Or you could define them farther in-say, where your brain 
+meets your body, the actions being muscle twitches to control your 
+limbs. Or you could go to a really high level and say that your 
+actions are your choices of where to drive. 
+
+1. What is the right level, 
+the right place to draw the line between agent and environment? 
+
+As said before in the text seperating agent from what it has absolute 
+control over is a good rule.
+
+In the case of driving, I think a good seperation are the 
+mechanical/motor components of the vehicle as being for the most part 
+in control of the agent. Things not being in total control are other drivers, where to drive, speed limits, traffic laws, pedestrians etc.
+
+2. On what basis is one location of the line to be preferred over 
+another? 
+
+The purpose of the agent. 
+
+For driving, I want the car to be safe.
+
+For a pathfinding agent that is using gps to get me somewhere though. 
+It does not need to have control over the car as much as the other 
+agent that is responsible for not getting into accidents etc.
+
+
+3. Is there any fundamental reason for preferring one location 
+over another, or is it a free choice?
+
+I think it depends on the purpose of the agent, but as the book said
+the agent should relegate what it does not have absolute control over
+to the environment and keep what it has control over to its agency.
+
+In this way it is not completely a free choice, because you want the 
+agent to learn a task. If the agent is learning to drive then moving 
+to a high level such as "where to drive" or "why do I drive" would not accomplish the 
+task well and would actually be dangerous. 
+
+
+
+
+
